@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react'
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
-import MobxDevTools from 'mobx-react-devtools'
+import {BrowserRouter, Route} from 'react-router-dom'
+// import MobxDevTools from 'mobx-react-devtools'
 
 import Header from './containers/Header'
 import Footer from './containers/Footer'
@@ -25,13 +25,6 @@ import './app.scss'
 import Spinner from './components/Spinner'
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      loading: false
-    }
-  }
-
   componentWillMount() {
     store.userStore.pullUser()
   }

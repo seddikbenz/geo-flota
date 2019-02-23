@@ -1,7 +1,5 @@
 import { observable, reaction, action, decorate } from "mobx";
 
-import agent from '../agent';
-
 class CommonStore {
   appName = 'geo-flota';
   version = 'v-1.0.1';
@@ -14,8 +12,10 @@ class CommonStore {
       token => {
         if (token) {
           window.localStorage.setItem('jwt', token);
+          window.location.reload()
         } else {
           window.localStorage.removeItem('jwt');
+          window.location.reload()
         }
       }
     );

@@ -1,4 +1,4 @@
-import { observable, computed, action, decorate } from "mobx";
+import { observable, action, decorate } from "mobx";
 
 import agent from '../agent';
 
@@ -11,7 +11,7 @@ class UserStore {
   pullUser() {
     this.loadingUser = true;
     return agent.Auth.current()
-      .then((response) => {return response.data.user})
+      .then((response) => {return response.data.data})
       .then(action((user) => { this.currentUser = user }))
       .finally(action(() => { this.loadingUser = false }))
   }

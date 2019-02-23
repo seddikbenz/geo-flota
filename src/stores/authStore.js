@@ -1,4 +1,4 @@
-import { observable, computed, action, decorate } from "mobx";
+import { observable, action, decorate } from "mobx";
 
 import agent from '../agent';
 import userStore from './userStore';
@@ -42,8 +42,8 @@ class AuthStore{
     this.errors = undefined;
 
     return agent.Auth.login(this.values.email, this.values.password)
-      .then((response) => commonStore.setToken(response.data.user.token))
-      .then(() => userStore.pullUser())
+      .then((response) => commonStore.setToken(response.data.data.token))
+      //.then(() => userStore.pullUser())
       .catch(action((error) => {
 
       }))
@@ -63,9 +63,7 @@ class AuthStore{
   }
 
   logout() {
-    commonStore.setToken(undefined);
-    userStore.forgetUser();
-    return Promise.resolve();
+    commonStore.setToken(undefined)
   }
 }
 

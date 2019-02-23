@@ -3,7 +3,6 @@ import {observer} from 'mobx-react'
 import {Link} from 'react-router-dom'
 
 import store from '../../stores'
-import agent from '../../agent'
 import './style.scss'
 import All from "../Users/All";
 import Edit from "../Users/Edit";

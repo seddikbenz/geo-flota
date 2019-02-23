@@ -9,7 +9,7 @@ import './style.scss'
 class Map extends Component{
   render(){
     return(
-      <div>Map</div>
+      <div>Maps</div>
     )
   }
 }

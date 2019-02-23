@@ -17,6 +17,7 @@ class Me extends Component{
               <label>Username</label>
               <input
                 value={store.userStore.currentUser.username}
+                readOnly
                 type="text"
                 className="form-control"
                 placeholder="Username"
@@ -25,6 +26,7 @@ class Me extends Component{
             <div className="form-group">
               <label>Email</label>
               <input
+                readOnly
                 value={store.userStore.currentUser.email}
                 type="email"
                 className="form-control"
