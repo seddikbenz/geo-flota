@@ -6,11 +6,27 @@ import store from '../../stores'
 
 import './style.scss'
 
+import Spinner from '../../components/Spinner'
+
 class All extends Component {
+  componentDidMount(){
+    store.companyStore.getAll()
+  }
   render() {
+    if(store.companyStore.loading){
+      return (
+        <div className="window-content center">
+          <Spinner/>
+        </div>
+      )
+    }
     return (
       <div className="window-content">
-        All
+        message = {store.companyStore.message.body} type {store.companyStore.message.type}
+        <br/>
+        {store.companyStore.companies.map((company,index)=>(
+          <div key={index} > {company.name} </div>
+        ))}
       </div>
     )
   }

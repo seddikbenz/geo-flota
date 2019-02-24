@@ -18,8 +18,12 @@ const Auth = {
   save: (user) => requests.put('/auth/user', { user })
 };
 
+const Company = {
+  all: () => requests.get('/companies'),
+};
 
 
 export default {
   Auth,
+  Company
 };
