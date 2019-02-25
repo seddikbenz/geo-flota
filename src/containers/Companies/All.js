@@ -9,11 +9,38 @@ import './style.scss'
 import Spinner from '../../components/Spinner'
 
 class All extends Component {
-  componentDidMount(){
+  _table
+
+  componentDidMount() {
     store.companyStore.getAll()
+    document.addEventListener("keydown", this._onKeyDown, false);
   }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this._onKeyDown, false);
+  }
+
+  _onKeyDown(e) {
+    if (e.keyCode === 38) {
+      if (store.companyStore.selectedIndex === 0) {
+        store.companyStore.selectedIndex = store.companyStore.companies.length - 1
+      } else {
+        store.companyStore.selectedIndex = Math.abs((store.companyStore.selectedIndex - 1) % (store.companyStore.companies.length))
+      }
+    }
+    if (e.keyCode === 40) {
+      store.companyStore.selectedIndex = Math.abs((store.companyStore.selectedIndex + 1) % (store.companyStore.companies.length))
+    }
+  }
+
+  delete(id) {
+    if (window.confirm('Do you delete this Company')) {
+      store.companyStore.delete(id)
+    }
+  }
+
   render() {
-    if(store.companyStore.loading){
+    if (store.companyStore.loading) {
       return (
         <div className="window-content center">
           <Spinner/>
@@ -21,15 +48,43 @@ class All extends Component {
       )
     }
     return (
-      <div className="window-content">
-        message = {store.companyStore.message.body} type {store.companyStore.message.type}
-        <br/>
-        {store.companyStore.companies.map((company,index)=>(
-          <div key={index} > {company.name} </div>
-        ))}
+      <div className="window-content all-company">
+        <input placeholder='Search company' className='form-control' type="text"/>
+        <div className='window-content'>
+          <table ref={(e) => this._table = e} className="table-striped">
+            <thead>
+            <tr>
+              <th>id</th>
+              <th>Name</th>
+              <th>Logo</th>
+              <th className='actions'>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {store.companyStore.companies.map((company, index) => (
+              <tr onClick={() => store.companyStore.selectedIndex = index} key={index}
+                  className={store.companyStore.selectedIndex === index ? 'active' : ''}>
+                <td> {index + 1} </td>
+                <td>{company.name}</td>
+                <td><img style={{width: 16}} src={company.logo}/></td>
+                <td className='actions'>
+                  <Link to={'/companies/edit/' + company.id}
+                        className={`btn btn-default ${this.props.location.pathname === '/companies/edit' ? 'active' : ''}`}>
+                    <span className="icon icon-pencil"></span>
+                  </Link>
+                  <button onClick={()=>this.delete(company.id)} className="btn btn-default">
+                    <span className="icon icon-trash"></span>
+                  </button>
+                </td>
+              </tr>
+            ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     )
   }
 }
 
 export default observer(All);
+//        message = {store.companyStore.message.body} type {store.companyStore.message.type}

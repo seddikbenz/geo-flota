@@ -12,6 +12,11 @@ class Add extends Component {
   componentDidMount() {}
   submit(e) {
     e.preventDefault();
+    store.companyStore.create()
+    store.companyStore.company  = {
+      name: '',
+      logo: ''
+    }
   }
   render() {
     if (store.companyStore.loading) {
@@ -23,15 +28,24 @@ class Add extends Component {
     }
     return (
       <div
-        className="window-content"
-        style={{ padding: 10, flexDirection: "column" }}
+        className="window-content add-company"
       >
         <h4>Add new company</h4>
         <form>
           <div className="form-group">
-            <label>Company name</label>
+            <label>Company name <span className='required'>*</span></label>
             <input
+              value={store.companyStore.company.name}
+              onChange={e=> store.companyStore.company.name = e.target.value.toUpperCase()}
               type="text"
+              className="form-control"
+              placeholder="Company name"
+            />
+          </div>
+          <div className="form-group">
+            <label>Company logo image 255 * 255</label>
+            <input
+              type="file"
               className="form-control"
               placeholder="Company name"
             />

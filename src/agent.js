@@ -20,6 +20,8 @@ const Auth = {
 
 const Company = {
   all: () => requests.get('/companies'),
+  create: (name, logo) => requests.post('/companies', { name, logo } ),
+  delete: (id) => requests.delete('/companies/' + id),
 };
 
 

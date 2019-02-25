@@ -1,5 +1,5 @@
 {
-  "name": "geo-flota",
+  "name": "geo-flota-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,10 +8,10 @@
     "mobx-react": "^5.4.3",
     "mobx-react-devtools": "^6.0.3",
     "node-sass": "^4.11.0",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.5"
+    "react-scripts": "^2.1.5"
   },
   "scripts": {
     "start": "react-scripts start",

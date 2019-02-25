@@ -3,11 +3,7 @@ import { observable, action, decorate } from "mobx";
 import agent from "../agent";
 
 class UserStore {
-  currentUser = {
-    username: "",
-    email: "",
-    password: ""
-  };
+  currentUser
   loadingUser = false;
   updatingUser = false;
   updatingUserErrors;

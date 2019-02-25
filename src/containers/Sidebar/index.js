@@ -24,7 +24,7 @@ class Sidebar extends Component{
         </nav>
         <nav className="nav-group">
           <h5 className="nav-group-title">Settings</h5>
-          <Link to={'/companies'} className={`nav-group-item ${this.props.location.pathname === '/companies' || this.props.location.pathname === '/companies/add' || this.props.location.pathname === '/companies/edit' ? 'active':''}`}>
+          <Link to={'/companies'} className={`nav-group-item ${ this.props.location.pathname.includes('/companies') ? 'active':''}`}>
             <span className="icon icon-suitcase"></span>
             Companies
           </Link>

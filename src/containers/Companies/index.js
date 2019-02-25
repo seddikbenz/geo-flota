@@ -12,12 +12,22 @@ import Edit from './Edit'
 import {match, RouteComponentProps} from "react-router";
 
 class Companies extends Component{
+  getTitle(){
+    if(this.props.location.pathname.includes('/companies/add')){
+      return 'Add company'
+    }
+    if(this.props.location.pathname.includes('/companies/edit')){
+      return 'Edit company'
+    }
+    if(this.props.location.pathname.includes('/companies') ){
+      return 'Companies list'
+    }
+  }
   render(){
     return(
       <div className="window">
         <header className="toolbar toolbar-header">
-          <h1 className="title">Companies settings</h1>
-
+          <h1 className="title"> {this.getTitle()} </h1>
           <div className="toolbar-actions">
             <div className="btn-group">
               <Link to={'/companies'} className={`btn btn-default ${this.props.location.pathname === '/companies' ? 'active' : ''}`}>
@@ -26,12 +36,6 @@ class Companies extends Component{
               <Link to={'/companies/add'} className={`btn btn-default ${this.props.location.pathname === '/companies/add' ? 'active' : ''}`}>
                 <span className="icon icon-list-add"></span>
               </Link>
-              <Link to={'/companies/edit'} className={`btn btn-default ${this.props.location.pathname === '/companies/edit' ? 'active' : ''}`}>
-                <span className="icon icon-pencil"></span>
-              </Link>
-              <button className="btn btn-default">
-                <span className="icon icon-ccw"></span>
-              </button>
             </div>
           </div>
         </header>
