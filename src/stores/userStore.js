@@ -1,33 +1,56 @@
 import { observable, action, decorate } from "mobx";
 
-import agent from '../agent';
+import agent from "../agent";
 
 class UserStore {
-  currentUser;
-  loadingUser = false ;
+  currentUser = {
+    username: "",
+    email: "",
+    password: ""
+  };
+  loadingUser = false;
   updatingUser = false;
   updatingUserErrors;
 
   pullUser() {
     this.loadingUser = true;
     return agent.Auth.current()
-      .then((response) => {return response.data.data})
-      .then(action((user) => { this.currentUser = user }))
-      .finally(action(() => { this.loadingUser = false }))
+      .then(response => {
+        return response.data.data;
+      })
+      .then(
+        action(user => {
+          this.currentUser = user;
+        })
+      )
+      .finally(
+        action(() => {
+          this.loadingUser = false;
+        })
+      );
   }
 
   updateUser(newUser) {
     this.updatingUser = true;
     return agent.Auth.save(newUser)
-      .then((response) => {return response.data.user})
-      .then(action((user) => { this.currentUser = user; }))
-      .finally(action(() => { this.updatingUser = false; }))
+      .then(response => {
+        return response.data.user;
+      })
+      .then(
+        action(user => {
+          this.currentUser = user;
+        })
+      )
+      .finally(
+        action(() => {
+          this.updatingUser = false;
+        })
+      );
   }
 
   forgetUser() {
     this.currentUser = undefined;
   }
-
 }
 
 UserStore = decorate(UserStore, {
