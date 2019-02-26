@@ -1,25 +1,59 @@
 import { observable, reaction, action, decorate } from "mobx";
 import agent from "../agent";
-import store from "./index";
+import commonStore from "./commonStore";
 
 class companyStore {
   selectedIndex = 0;
   company = {
+    id: 0,
     name: "",
     logo: ""
   };
-  companies = [
-    {
-      id: 10,
-      name: "geo-flota",
-      logo: ""
-    }
-  ];
+  companies = [];
   loading = false;
   message = {
     type: "",
-    body: ""
+    body: "",
+    show: false
   };
+  hideMessage(){
+    this.message = {
+      type: '',
+      body: '',
+      show: false
+    }
+  }
+  showMessage(message){
+    this.message = message
+  }
+  getCompany(id) {
+    this.loading = true;
+    return agent.Company.getCompany(id)
+      .then(response => {
+        return response.data;
+      })
+      .then(
+        action(data => {
+          this.company = data.data
+        })
+      )
+      .catch(error => {
+        let body =
+          error.response !== undefined
+            ? error.response.data.message
+            : error.message;
+        this.showMessage({
+          type: 'error',
+          body: body,
+          show: true
+        })
+      })
+      .finally(
+        action(() => {
+          this.loading = false;
+        })
+      );
+  }
 
   getAll() {
     this.loading = true;
@@ -29,17 +63,19 @@ class companyStore {
       })
       .then(
         action(data => {
-          this.message.body = data.message;
-          this.message.type = "success";
           this.companies = data.data;
         })
       )
       .catch(error => {
-        this.message.body =
+        let body =
           error.response !== undefined
             ? error.response.data.message
             : error.message;
-        this.message.type = "error";
+        this.showMessage({
+          type: 'error',
+          body: body,
+          show: true
+        })
       })
       .finally(
         action(() => {
@@ -55,24 +91,28 @@ class companyStore {
       })
       .then(
         action(data => {
-          this.message.body = data.message;
-          this.message.type = "success";
+          this.showMessage({
+            type: 'success',
+            body: data.message,
+            show: true
+          })
         })
       )
       .catch(error => {
-        this.message.body =
+        let body =
           error.response !== undefined
             ? error.response.data.message
             : error.message;
-        this.message.type = "error";
+        this.showMessage({
+          type: 'error',
+          body: body,
+          show: true
+        })
       })
       .finally(
         action(() => {
           this.loading = false;
-          this.companyStore.company = {
-            name: "",
-            logo: ""
-          };
+          //commonStore.history.push('/companies')
         })
       );
   }
@@ -86,19 +126,60 @@ class companyStore {
         })
         .then(
           action(data => {
-            this.message.body = data.message;
-            this.message.type = "success";
+            this.showMessage({
+              type: 'success',
+              body: data.message,
+              show: true
+            })
           })
         )
         .catch(error => {
-          this.message.body =
+          let body =
             error.response !== undefined
               ? error.response.data.message
               : error.message;
-          this.message.type = "error";
+          this.showMessage({
+            type: 'error',
+            body: body,
+            show: true
+          })
         })
         .finally(action(() => this.getAll()));
     }
+  }
+
+  update() {
+    this.loading = true;
+    return agent.Company.update(this.company)
+      .then(response => {
+        return response.data;
+      })
+      .then(
+        action(data => {
+          this.showMessage({
+            type: 'success',
+            body: data.message,
+            show: true
+          })
+        })
+      )
+      .catch(error => {
+        let body =
+          error.response !== undefined
+            ? error.response.data.message
+            : error.message;
+        this.showMessage({
+          type: 'error',
+          body: body,
+          show: true
+        })
+      })
+      .finally(
+        action(() => {
+          this.loading = false;
+          //commonStore.history.push('/companies')
+        })
+      );
   }
 }
 
@@ -107,7 +188,7 @@ companyStore = decorate(companyStore, {
   company: observable,
   companies: observable,
   loading: observable,
-  message: observable
+  message: observable,
 });
 
 export default new companyStore();

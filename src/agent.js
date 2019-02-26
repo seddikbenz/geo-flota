@@ -19,9 +19,11 @@ const Auth = {
 };
 
 const Company = {
+  getCompany: (id) => requests.get('/companies/' + id),
   all: () => requests.get('/companies'),
   create: (name, logo) => requests.post('/companies', { name, logo } ),
   delete: (id) => requests.delete('/companies/' + id),
+  update: (company) => requests.put('/companies/' + company.id, {...company})
 };
 
 

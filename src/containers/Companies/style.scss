@@ -1,8 +1,7 @@
-.add-company {
+.company {
   flex-direction: column;
   padding: 10px;
   form {
-    margin-top: 20px;
     align-self: center;
     padding: 20px;
     width: 80%;
@@ -12,22 +11,12 @@
   }
 }
 
-.edit-company {
+.companies {
   flex-direction: column;
-  padding: 10px;
-  form {
-    margin-top: 20px;
-    align-self: center;
-    padding: 20px;
-    width: 80%;
-    .required {
-      color: red;
-    }
+  .search{
+    paddin: 1px;
+    border: none;
   }
-}
-
-.all-company {
-  flex-direction: column;
   h4 {
     margin-left: 10px;
   }

@@ -39,7 +39,7 @@ class App extends Component {
         </div>
       );
     }
-    if (store.userStore.currentUser === undefined) {
+    if (store.userStore.currentUser.username === '') {
       return <Login />;
     }
     return (

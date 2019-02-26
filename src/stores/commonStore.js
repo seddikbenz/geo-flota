@@ -1,11 +1,10 @@
 import { observable, reaction, action, decorate } from "mobx";
-
 class CommonStore {
   appName = 'geo-flota';
   version = 'v-1.0.1';
   token = window.localStorage.getItem('jwt');
   appLoaded = false;
-
+  history
   constructor() {
     reaction(
       () => this.token,
@@ -37,6 +36,7 @@ CommonStore = decorate(CommonStore, {
   version: observable,
   token: observable,
   appLoaded: observable,
+  history: observable,
   setToken: action,
   setAppLoaded: action
 });

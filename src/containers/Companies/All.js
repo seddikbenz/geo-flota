@@ -9,10 +9,9 @@ import './style.scss'
 import Spinner from '../../components/Spinner'
 
 class All extends Component {
-  _table
-
   componentDidMount() {
     store.companyStore.getAll()
+    store.companyStore.selectedIndex = 0
     document.addEventListener("keydown", this._onKeyDown, false);
   }
 
@@ -48,15 +47,14 @@ class All extends Component {
       )
     }
     return (
-      <div className="window-content all-company">
-        <input placeholder='Search company' className='form-control' type="text"/>
+      <div className="window-content companies">
+        <input autoFocus={true} placeholder='Search company' className='form-control search' type="text"/>
         <div className='window-content'>
-          <table ref={(e) => this._table = e} className="table-striped">
+          <table className="table-striped">
             <thead>
             <tr>
-              <th>id</th>
+              <th>index</th>
               <th>Name</th>
-              <th>Logo</th>
               <th className='actions'>Actions</th>
             </tr>
             </thead>
@@ -66,7 +64,6 @@ class All extends Component {
                   className={store.companyStore.selectedIndex === index ? 'active' : ''}>
                 <td> {index + 1} </td>
                 <td>{company.name}</td>
-                <td><img style={{width: 16}} src={company.logo}/></td>
                 <td className='actions'>
                   <Link to={'/companies/edit/' + company.id}
                         className={`btn btn-default ${this.props.location.pathname === '/companies/edit' ? 'active' : ''}`}>

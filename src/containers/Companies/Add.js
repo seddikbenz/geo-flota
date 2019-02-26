@@ -9,7 +9,13 @@ import store from "../../stores";
 import "./style.scss";
 
 class Add extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    store.companyStore.company = {
+      id: 0,
+      name: "",
+      logo: ""
+    };
+  }
   submit(e) {
     e.preventDefault();
     store.companyStore.create();
@@ -23,8 +29,7 @@ class Add extends Component {
       );
     }
     return (
-      <div className="window-content add-company">
-        <h4>Add new company</h4>
+      <div className="window-content company">
         <form>
           <div className="form-group">
             <label>

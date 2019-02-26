@@ -4,8 +4,16 @@ import agent from "../agent";
 
 class UserStore {
   currentUser={
-    name: 'seddik',
-    
+    id: 0,
+    company_id: 0,
+    user_id: 0,
+    username: "",
+    created_at: null,
+    email: "",
+    job: null,
+    role: "",
+    tel: null,
+    updated_at: null,
   }
   loadingUser = false;
   updatingUser = false;

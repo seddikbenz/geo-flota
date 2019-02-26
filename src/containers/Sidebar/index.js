@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {observer} from 'mobx-react'
 import {Link, withRouter} from 'react-router-dom'
 import './style.scss'
+import store from "../../stores";
 
 class Sidebar extends Component{
   render(){
