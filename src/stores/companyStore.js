@@ -3,62 +3,101 @@ import agent from "../agent";
 import store from "./index";
 
 class companyStore {
-  selectedIndex = 0
+  selectedIndex = 0;
   company = {
-    name: '',
-    logo: ''
-  }
-  companies = []
-  loading = false
+    name: "",
+    logo: ""
+  };
+  companies = [
+    {
+      id: 10,
+      name: "geo-flota",
+      logo: ""
+    }
+  ];
+  loading = false;
   message = {
-    type: '',
-    body: ''
-  }
+    type: "",
+    body: ""
+  };
 
   getAll() {
     this.loading = true;
     return agent.Company.all()
-      .then((response) => {return response.data})
-      .then(action((data) => {
-        this.message.body = data.message
-        this.message.type = 'success'
-        this.companies = data.data
-      }))
-      .catch((error)=>{
-        this.message.body = error.response !== undefined ? error.response.data.message : error.message
-        this.message.type = 'error'
+      .then(response => {
+        return response.data;
       })
-      .finally(action(() => { this.loading = false }))
+      .then(
+        action(data => {
+          this.message.body = data.message;
+          this.message.type = "success";
+          this.companies = data.data;
+        })
+      )
+      .catch(error => {
+        this.message.body =
+          error.response !== undefined
+            ? error.response.data.message
+            : error.message;
+        this.message.type = "error";
+      })
+      .finally(
+        action(() => {
+          this.loading = false;
+        })
+      );
   }
-  create(){
+  create() {
     this.loading = true;
     return agent.Company.create(this.company.name, this.company.logo)
-      .then((response) => {return response.data})
-      .then(action((data) => {
-        this.message.body = data.message
-        this.message.type = 'success'
-      }))
-      .catch((error)=>{
-        this.message.body = error.response !== undefined ? error.response.data.message : error.message
-        this.message.type = 'error'
+      .then(response => {
+        return response.data;
       })
-      .finally(action(() => { this.loading = false }))
+      .then(
+        action(data => {
+          this.message.body = data.message;
+          this.message.type = "success";
+        })
+      )
+      .catch(error => {
+        this.message.body =
+          error.response !== undefined
+            ? error.response.data.message
+            : error.message;
+        this.message.type = "error";
+      })
+      .finally(
+        action(() => {
+          this.loading = false;
+          this.companyStore.company = {
+            name: "",
+            logo: ""
+          };
+        })
+      );
   }
 
-  delete(id){
-    if(this.companies.length !== 0 ){
+  delete(id) {
+    if (this.companies.length !== 0) {
       this.loading = true;
       return agent.Company.delete(id)
-        .then((response) => {return response.data})
-        .then(action((data) => {
-          this.message.body = data.message
-          this.message.type = 'success'
-        }))
-        .catch((error)=>{
-          this.message.body = error.response !== undefined ? error.response.data.message : error.message
-          this.message.type = 'error'
+        .then(response => {
+          return response.data;
         })
-        .finally(action(() => this.getAll()))
+        .then(
+          action(data => {
+            this.message.body = data.message;
+            this.message.type = "success";
+          })
+        )
+        .catch(error => {
+          this.message.body =
+            error.response !== undefined
+              ? error.response.data.message
+              : error.message;
+          this.message.type = "error";
+        })
+        .finally(action(() => this.getAll()));
     }
   }
 }
@@ -68,7 +107,7 @@ companyStore = decorate(companyStore, {
   company: observable,
   companies: observable,
   loading: observable,
-  message: observable,
+  message: observable
 });
 
 export default new companyStore();

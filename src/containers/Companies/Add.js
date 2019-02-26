@@ -12,11 +12,7 @@ class Add extends Component {
   componentDidMount() {}
   submit(e) {
     e.preventDefault();
-    store.companyStore.create()
-    store.companyStore.company  = {
-      name: '',
-      logo: ''
-    }
+    store.companyStore.create();
   }
   render() {
     if (store.companyStore.loading) {
@@ -27,16 +23,18 @@ class Add extends Component {
       );
     }
     return (
-      <div
-        className="window-content add-company"
-      >
+      <div className="window-content add-company">
         <h4>Add new company</h4>
         <form>
           <div className="form-group">
-            <label>Company name <span className='required'>*</span></label>
+            <label>
+              Company name <span className="required">*</span>
+            </label>
             <input
               value={store.companyStore.company.name}
-              onChange={e=> store.companyStore.company.name = e.target.value.toUpperCase()}
+              onChange={e =>
+                (store.companyStore.company.name = e.target.value.toUpperCase())
+              }
               type="text"
               className="form-control"
               placeholder="Company name"
