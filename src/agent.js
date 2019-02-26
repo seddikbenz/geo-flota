@@ -2,7 +2,7 @@ import axios from 'axios'
 import commonStore from './stores/commonStore';
 
 
-const API_ROOT = 'http://localhost:8000/api';
+const API_ROOT = 'https://geo-flota.herokuapp.com/api';
 
 let requests = axios.create({
   baseURL: API_ROOT,
